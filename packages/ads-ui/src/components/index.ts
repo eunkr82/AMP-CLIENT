@@ -1,6 +1,7 @@
 export { default as AddToWatchButton } from './button/add-to-watch/add-to-watch';
 export { default as CategoryButton } from './button/category-button/category-button';
 export { default as CircleButton } from './button/circle-button/circle-button';
+export { default as CrowdLevelButton } from './button/crowd-level-button/crowd-level-button';
 export { default as CtaButton } from './button/cta-button/cta-button';
 export { default as FlagButton } from './button/flag-button/flag-button';
 export { default as NavigationListContainer } from './button/navigation-list-button/navigation-list-container';
