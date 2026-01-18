@@ -1,11 +1,10 @@
 {
-  "name": "@amp/ads-ui",
+  "name": "@amp/shared",
   "private": true,
   "exports": {
-    ".": "./src/components/index.ts",
-    "./icons": "./src/icons/index.ts",
-    "./styles": "./src/styles/index.ts",
-    "./styles/theme.css": "./src/styles/theme.css.ts"
+    ".": "./src/compositions/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./utils": "./src/utils/index.ts"
   },
   "scripts": {
     "build": "tsc -b",
@@ -15,12 +14,10 @@
     "@vanilla-extract/css": "catalog:",
     "@vanilla-extract/recipes": "catalog:",
     "@vanilla-extract/vite-plugin": "catalog:",
-    "clsx": "^2.1.1",
-    "overlay-kit": "^1.8.6",
+    "@amp/ads-ui": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-router": "catalog:",
-    "zustand": "^5.0.10"
+    "react-router": "catalog:"
   },
   "devDependencies": {
     "@amp/eslint-config": "workspace:*",
