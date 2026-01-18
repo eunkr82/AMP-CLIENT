@@ -19,7 +19,8 @@ const Onboarding = () => {
       <NicknameForm userType='audience' value={name} onChange={setName} />
       <div className={styles.buttonContainer}>
         <CtaButton
-          type='gray'
+          type='common'
+          color='gray'
           selected={selected}
           disabled={disabled}
           onClick={handleNext}
