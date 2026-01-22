@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import { IMAGES } from '../assets/index';
 import ButtonGradientSection from '../button-gradient-section/button-gradient-section';
 
 import * as styles from './notice-detail-layout.css';
@@ -31,7 +32,11 @@ const NoticeDetailLayoutRoot = ({ children }: NoticeDetailLayoutProps) => {
 const Content = ({ data }: NoticeDetailContentProps) => {
   return (
     <div className={styles.noticeDetail}>
-      <img src={data.imageUrl} alt={data.title} className={styles.img} />
+      <img
+        src={data.imageUrl ?? IMAGES.EMPTY_NOTICE}
+        alt={data.title}
+        className={styles.img}
+      />
       <header className={styles.header}>
         <p className={styles.category}>
           주최 공지 {'>'} {data.category}

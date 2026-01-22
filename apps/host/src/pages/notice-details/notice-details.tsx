@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
 import { generatePath, useNavigate, useParams } from 'react-router';
@@ -6,10 +7,10 @@ import { CtaButton, Modal, RectButton } from '@amp/ads-ui';
 import { PenIcon, TrashIcon } from '@amp/ads-ui/icons';
 import { NoticeDetailLayout } from '@amp/compositions';
 
-import { NOTICE_DETAIL_QUERY_OPTIONS } from '@features/notice-detail/query';
+import { NOTICE_DETAIL_QUERY_OPTIONS } from '@features/notice-details/query';
 
 import { ROUTE_PATH } from '@shared/constants/path';
-import type { NoticeDetailResponse } from '@shared/types/notice-detail-response';
+import type { NoticeDetailResponse } from '@shared/types/notice-details-response';
 
 import * as styles from './notice-details.css';
 
@@ -28,6 +29,7 @@ const NoticeDetailsPage = () => {
       }),
     );
   };
+
   const noticeIdNumber = Number(noticeId);
 
   const { data } = useQuery<
@@ -37,7 +39,19 @@ const NoticeDetailsPage = () => {
     (string | number)[]
   >(NOTICE_DETAIL_QUERY_OPTIONS.DETAIL(noticeIdNumber));
 
-  if (!data) {
+  const normalizedData = useMemo(() => {
+    if (!data) {
+      return null;
+    }
+
+    return {
+      ...data,
+      imageUrl: data.imageUrl ?? '',
+      category: data.category.categoryName,
+    };
+  }, [data]);
+
+  if (!normalizedData) {
     return null;
   }
 
@@ -83,7 +97,7 @@ const NoticeDetailsPage = () => {
 
   return (
     <NoticeDetailLayout>
-      <NoticeDetailLayout.Content data={data} />
+      <NoticeDetailLayout.Content data={normalizedData} />
       <NoticeDetailLayout.Actions>
         <CtaButton
           type='icon'
@@ -97,9 +111,7 @@ const NoticeDetailsPage = () => {
         <CtaButton
           type='icon'
           color='white'
-          onClick={() => {
-            handleDeleteClick();
-          }}
+          onClick={handleDeleteClick}
           className={styles.ctaButton}
         >
           <TrashIcon />

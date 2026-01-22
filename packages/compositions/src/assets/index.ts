@@ -1,4 +1,5 @@
 import crowded from './crowded.webp';
+import emptyNotice from './empty-notice.webp';
 import homeBannerAudience from './homebanner-audience.webp';
 import homeBannerAudienceNone from './homebanner-audience-none.webp';
 import none from './none.webp';
@@ -15,4 +16,6 @@ export const IMAGES = {
   NORMAL: normal,
   SMOOTH: smooth,
   NONE: none,
+
+  EMPTY_NOTICE: emptyNotice,
 } as const;
