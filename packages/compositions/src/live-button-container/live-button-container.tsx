@@ -6,7 +6,7 @@ import * as styles from './live-button-container.css';
 
 interface LiveButtonContainerProps {
   items: {
-    id: number;
+    stageId: number;
     title: string;
     location?: string | null;
     congestionLevel: string;
@@ -15,6 +15,8 @@ interface LiveButtonContainerProps {
   isDisabled?: boolean;
   onClick?: (id: number) => void;
 }
+
+// TODO: 이전 PR 머지하고 다시 확인
 
 const STATUS_IMAGES: Record<StatusSheetValue, string> = {
   SMOOTH: IMAGES.SMOOTH,
@@ -37,13 +39,13 @@ const LiveButtonContainer = ({
 
         return (
           <LiveButton
-            key={item.id}
+            key={item.stageId}
             title={item.title}
             subText={item.location ?? ''}
             imageUrl={statusImageUrl}
             showIcon={showIcon}
             isDisabled={isDisabled}
-            onClick={() => onClick?.(item.id)}
+            onClick={() => onClick?.(item.stageId)}
           />
         );
       })}

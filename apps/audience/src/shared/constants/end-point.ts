@@ -9,9 +9,12 @@ export const END_POINT = {
   // 공지 상세
   GET_FESTIVAL_NOTICE_DETAIL: (noticeId: number | string) =>
     `/common/notices/${noticeId}`,
-
   GET_FESTIVAL_NOTICES: (eventId: number) =>
     `/common/festivals/${eventId}/notices`,
+  POST_FESTIVAL_NOTIFICATIONS_SUBSCRIBE: (
+    festivalId: number,
+    categoryCode: string,
+  ) => `/festivals/${festivalId}/users/notifications/${categoryCode}/subscribe`,
 
   // 홈 화면
   GET_ALL_FESTIVALS: '/users/festivals',
@@ -22,6 +25,10 @@ export const END_POINT = {
 
   //온보딩
   POST_ONBOARDING_COMPLETE: '/auth/onboarding/complete',
+
+  // 현장 혼잡도 입력
+  POST_STAGE_CONGESTION: (stageId: number) =>
+    `/users/stages/${stageId}/congestion`,
 
   // 북마크
   POST_NOTICE_BOOKMARK: (noticeId: number) =>

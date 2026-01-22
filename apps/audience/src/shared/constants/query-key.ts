@@ -34,6 +34,9 @@ export const USERS_QUERY_KEY = {
     'home-festivals-upcoming',
   ],
 
+  STAGE_CONGESTION: (stageId: number) =>
+    [...USERS_QUERY_KEY.ALL, 'stages', stageId, 'congestion'] as const,
+
   BOOKMARKS: {
     ALL: () => [...USERS_QUERY_KEY.ALL, 'bookmarks'] as const,
     NOTICES: () => [...USERS_QUERY_KEY.ALL, 'bookmarks', 'notices'] as const,
