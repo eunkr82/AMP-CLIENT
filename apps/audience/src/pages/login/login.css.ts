@@ -8,12 +8,10 @@ export const container = style({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '0 2rem',
 });
 
 export const ctaButtonContainer = style({
-  padding: '2rem 0',
-  width: '100%',
+  padding: '2rem',
 });
 
 export const skipButton = style({

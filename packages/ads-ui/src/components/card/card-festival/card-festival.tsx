@@ -29,26 +29,16 @@ const Chip = ({ children }: { children: ReactNode }) => (
   <div className={styles.chip}>{children}</div>
 );
 
-type SlotProps = ComponentPropsWithoutRef<'div'> & { children: ReactNode };
-
-const Button = ({ children, ...rest }: SlotProps) => (
-  <div className={styles.buttonSlot} {...rest}>
-    {children}
-  </div>
+const Button = ({ children }: { children: ReactNode }) => (
+  <div className={styles.buttonSlot}>{children}</div>
 );
 
 const Icon = ({ children }: { children: ReactNode }) => (
   <div className={styles.iconSlot}>{children}</div>
 );
 
-type RootProps = ComponentPropsWithoutRef<'article'> & {
-  children: ReactNode;
-};
-
-const Root = ({ children, ...rest }: RootProps) => (
-  <article className={styles.card} {...rest}>
-    {children}
-  </article>
+const Root = ({ children }: { children: ReactNode }) => (
+  <article className={styles.card}>{children}</article>
 );
 
 type CardFestivalComponent = ((props: RootProps) => ReactElement) & {
