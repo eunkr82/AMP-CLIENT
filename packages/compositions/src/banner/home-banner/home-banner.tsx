@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import clsx from 'clsx';
+
+>>>>>>> develop
 import { CardHome } from '@amp/ads-ui';
 
 import * as styles from './home-banner.css';
@@ -38,7 +43,11 @@ const HomeBanner = (props: HomeBannerProps) => {
     const { title, location, date, dday } = props;
 
     return (
+<<<<<<< HEAD
       <article className={styles.banner}>
+=======
+      <article className={clsx(styles.banner, styles.bannerCard)}>
+>>>>>>> develop
         <p className={styles.text}>
           <span className={styles.nickname}>{nickname}님,</span> {message}
         </p>
@@ -48,7 +57,11 @@ const HomeBanner = (props: HomeBannerProps) => {
   }
 
   return (
+<<<<<<< HEAD
     <article className={styles.banner}>
+=======
+    <article className={clsx(styles.banner, styles.bannerNone)}>
+>>>>>>> develop
       <p className={styles.text}>
         <span className={styles.nickname}>{nickname}님,</span> {message}
       </p>

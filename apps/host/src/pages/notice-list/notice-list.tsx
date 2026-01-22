@@ -1,4 +1,10 @@
 import { useState } from 'react';
+<<<<<<< HEAD
+=======
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router';
+import { useNavigate } from 'react-router';
+>>>>>>> develop
 
 import { CircleButton } from '@amp/ads-ui';
 import {
@@ -10,10 +16,16 @@ import {
 } from '@amp/compositions';
 import { useNoticeList } from '@amp/shared/hooks';
 
+<<<<<<< HEAD
+=======
+import { NOTICES_QUERY_OPTIONS } from '@features/notice-list/apis/query';
+
+>>>>>>> develop
 import { LIVE_STATUS_MOCK } from '@shared/mocks/current';
 import { FESTIVAL_MOCK } from '@shared/mocks/notice-list';
 
 import * as styles from './notice-list.css';
+<<<<<<< HEAD
 
 type NoticeTab = (typeof NOTICE_TAB)[keyof typeof NOTICE_TAB];
 
@@ -26,6 +38,29 @@ const NoticeListPage = () => {
 
   const handleNoticeItemClick = (id: number) => {
     // TODO: 공지 상세 페이지 이동 등 로직 추가
+=======
+type NoticeTab = (typeof NOTICE_TAB)[keyof typeof NOTICE_TAB];
+
+const NoticeListPage = () => {
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<NoticeTab>(NOTICE_TAB.NOTICE);
+  const { eventId } = useParams<{ eventId: string }>();
+
+  const { data } = useQuery(
+    NOTICES_QUERY_OPTIONS.LIST(Number(eventId), {
+      page: 0,
+      size: 20,
+    }),
+  );
+
+  const announcements = data?.announcements ?? [];
+
+  const { selectedCategory, noticeList, handleChipClick } =
+    useNoticeList(announcements);
+
+  const handleNoticeItemClick = (noticeId: number) => {
+    navigate(`/events/:eventId/notices/${noticeId}`);
+>>>>>>> develop
   };
 
   return (

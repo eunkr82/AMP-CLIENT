@@ -1,4 +1,5 @@
 import { useState } from 'react';
+<<<<<<< HEAD
 import { overlay } from 'overlay-kit';
 
 import {
@@ -8,6 +9,14 @@ import {
   RectButton,
   toast,
 } from '@amp/ads-ui';
+=======
+import { useQuery } from '@tanstack/react-query';
+import { overlay } from 'overlay-kit';
+import { useParams } from 'react-router';
+import { useNavigate } from 'react-router';
+
+import { AddToWatchButton, Modal, RectButton, toast } from '@amp/ads-ui';
+>>>>>>> develop
 import { ChatIcon } from '@amp/ads-ui/icons';
 import {
   LiveButtonContainer,
@@ -18,6 +27,11 @@ import {
 } from '@amp/compositions';
 import { useNoticeList } from '@amp/shared/hooks';
 
+<<<<<<< HEAD
+=======
+import { NOTICES_QUERY_OPTIONS } from '@features/notice-list/apis/query';
+
+>>>>>>> develop
 import { useLiveStatus } from '@shared/hooks/use-live-status';
 import { useNoticeAlert } from '@shared/hooks/use-notice-alert';
 import { FESTIVAL_MOCK } from '@shared/mocks/notice-list';
@@ -28,6 +42,10 @@ import * as styles from './notice-list.css';
 type NoticeTab = (typeof NOTICE_TAB)[keyof typeof NOTICE_TAB];
 
 const NoticeListPage = () => {
+<<<<<<< HEAD
+=======
+  const navigate = useNavigate();
+>>>>>>> develop
   const [activeTab, setActiveTab] = useState<NoticeTab>(NOTICE_TAB.NOTICE);
 
   // TODO: 서버에서 받아온 값으로 기본값 설정
@@ -35,10 +53,29 @@ const NoticeListPage = () => {
 
   const { toggleAlert } = useNoticeAlert();
 
+<<<<<<< HEAD
   const { selectedCategory, noticeList, handleChipClick } = useNoticeList();
 
   const handleNoticeItemClick = (id: number) => {
     // TODO: 공지 상세 페이지 이동 등 로직 추가
+=======
+  const { eventId } = useParams<{ eventId: string }>();
+
+  const { data } = useQuery(
+    NOTICES_QUERY_OPTIONS.LIST(Number(eventId), {
+      page: 0,
+      size: 20,
+    }),
+  );
+
+  const announcements = data?.announcements ?? [];
+
+  const { selectedCategory, noticeList, handleChipClick } =
+    useNoticeList(announcements);
+
+  const handleNoticeItemClick = (noticeId: number) => {
+    navigate(`/events/:eventId/notices/${noticeId}`);
+>>>>>>> develop
   };
 
   const {
@@ -151,6 +188,7 @@ const NoticeListPage = () => {
           </div>
         )}
       </div>
+<<<<<<< HEAD
       {activeTab === NOTICE_TAB.NOTICE && (
         <section className={styles.buttonContainer}>
           <div className={styles.button}>
@@ -159,6 +197,8 @@ const NoticeListPage = () => {
           </div>
         </section>
       )}
+=======
+>>>>>>> develop
 
       <LiveStatusSheet
         open={isSheetOpen}
