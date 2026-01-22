@@ -1,6 +1,8 @@
 export const USERS_QUERY_KEY = {
   ALL: ['users'],
 
+  HOME_FESTIVALS: () => [...USERS_QUERY_KEY.ALL, 'home-festivals'],
+
   FESTIVAL_NOTICE_DETAIL: (noticeId: number | string) => [
     ...USERS_QUERY_KEY.ALL,
     'festival-notice-detail',
@@ -25,5 +27,6 @@ export const USERS_QUERY_KEY = {
     'home-festivals-upcoming',
   ],
   MY_PAGE: () => [...USERS_QUERY_KEY.ALL, 'my-page'],
+
   SAVED_NOTICES: () => [...USERS_QUERY_KEY.ALL, 'saved-notices'],
 } as const;
