@@ -1,18 +1,21 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { HomeBanner } from '@amp/compositions';
 
 import HomeFestivalSection from '@widgets/home/components/home-festival-section/home-festival-section';
 
-import { homeData } from '@shared/mocks/home-data';
+import { MY_PAGE_QUERY_OPTIONS } from '@features/mypage/apis/query';
 
 import useHomeFestivals from './model/use-home-festivals';
 
 import { page } from './home.css';
 
 const HomePage = () => {
-  const nickname = '관객 이름';
-  const upcomingFestival = homeData.data;
+  const { data: myPageData } = useQuery(MY_PAGE_QUERY_OPTIONS.MY_PAGE());
+  const nickname = myPageData?.nickname ?? '';
   const {
     allFestivals,
+    bannerFestival,
     upcomingFestivals,
     selectedTab,
     setSelectedTab,
@@ -20,14 +23,14 @@ const HomePage = () => {
     handleToggleUpcomingFestival,
   } = useHomeFestivals();
 
-  const banner = upcomingFestival ? (
+  const banner = bannerFestival ? (
     <HomeBanner
       nickname={nickname}
       status='card'
-      title={upcomingFestival.title}
-      location={upcomingFestival.location}
-      date={upcomingFestival.period}
-      dday={upcomingFestival.dDay}
+      title={bannerFestival.title}
+      location={bannerFestival.location}
+      date={bannerFestival.period}
+      dday={bannerFestival.dDay}
     />
   ) : (
     <HomeBanner nickname={nickname} status='none' />
