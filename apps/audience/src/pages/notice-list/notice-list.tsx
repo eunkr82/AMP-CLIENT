@@ -33,7 +33,6 @@ const NoticeListPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<NoticeTab>(NOTICE_TAB.NOTICE);
 
-  // TODO: 서버에서 받아온 값으로 기본값 설정
   const [isWatched, setIsWatched] = useState(false);
 
   const { eventId } = useParams<{ eventId: string }>();
@@ -72,7 +71,6 @@ const NoticeListPage = () => {
 
   const handleWatchToggle = () => {
     setIsWatched((prev) => !prev);
-    // TODO: 서버에 '관심 공연 등록/해제' API 요청 보내기
   };
 
   const handleAlertClick = () => {

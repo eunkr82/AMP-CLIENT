@@ -53,7 +53,7 @@ const NoticeListPage = () => {
 
   const liveItems =
     congestionData?.stages.map((stage) => ({
-      id: stage.stageId,
+      stageId: stage.stageId,
       title: stage.title,
       location: stage.location,
       congestionLevel: stage.congestionLevel,

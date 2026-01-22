@@ -26,6 +26,10 @@ export const END_POINT = {
   //온보딩
   POST_ONBOARDING_COMPLETE: '/auth/onboarding/complete',
 
+  // 현장 혼잡도 입력
+  POST_STAGE_CONGESTION: (stageId: number) =>
+    `/users/stages/${stageId}/congestion`,
+
   // 북마크
   POST_NOTICE_BOOKMARK: (noticeId: number) =>
     `/users/notices/${noticeId}/bookmark`,

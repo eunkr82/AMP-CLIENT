@@ -1,3 +1,5 @@
+import { IMAGES } from '../../../assets';
+
 export type StatusSheetValue = 'SMOOTH' | 'NORMAL' | 'CROWDED' | 'NONE';
 
 export const STATUS_DESCRIPTION =
@@ -7,31 +9,24 @@ export const EMPTY_DESCRIPTION = '공연 시작 시간 8시간 전부터 입력�
 
 export const CROWD_OPTIONS: {
   variant: 'smooth' | 'normal' | 'crowded' | 'none';
+
   value: StatusSheetValue;
   imageUrl: string;
 }[] = [
   {
     variant: 'smooth',
     value: 'SMOOTH',
-    imageUrl:
-      'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Relieved%20Face.png',
+    imageUrl: IMAGES.SMOOTH_BUTTON,
   },
   {
     variant: 'normal',
     value: 'NORMAL',
-    imageUrl:
-      'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Neutral%20Face.png',
+    imageUrl: IMAGES.NORMAL_BUTTON,
   },
   {
     variant: 'crowded',
     value: 'CROWDED',
-    imageUrl:
-      'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Confounded%20Face.png',
-  },
-  {
-    variant: 'none',
-    value: 'NONE',
-    imageUrl:
-      'https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Confounded%20Face.png',
+
+    imageUrl: IMAGES.CROWDED_BUTTON,
   },
 ];
