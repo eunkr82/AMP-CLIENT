@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { overlay } from 'overlay-kit';
+import { useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import {
   AddToWatchButton,
@@ -18,6 +21,8 @@ import {
 } from '@amp/compositions';
 import { useNoticeList } from '@amp/shared/hooks';
 
+import { NOTICES_QUERY_OPTIONS } from '@features/notice-list/apis/query';
+
 import { CATEGORY_CODE_BY_LABEL } from '@shared/constants/category-label';
 import { useNotificationsSubscribeMutation } from '@shared/hooks/use-festival-notification';
 import { useLiveStatus } from '@shared/hooks/use-live-status';
@@ -31,6 +36,7 @@ import * as styles from './notice-list.css';
 type NoticeTab = (typeof NOTICE_TAB)[keyof typeof NOTICE_TAB];
 
 const NoticeListPage = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<NoticeTab>(NOTICE_TAB.NOTICE);
 
   const [isWatched, setIsWatched] = useState(false);
@@ -52,8 +58,8 @@ const NoticeListPage = () => {
   const { selectedCategory, noticeList, handleChipClick } =
     useNoticeList(announcements);
 
-  const handleNoticeItemClick = (id: number) => {
-    // TODO: 공지 상세 페이지 이동 등 로직 추가
+  const handleNoticeItemClick = (noticeId: number) => {
+    navigate(`/events/:eventId/notices/${noticeId}`);
   };
 
   const {
