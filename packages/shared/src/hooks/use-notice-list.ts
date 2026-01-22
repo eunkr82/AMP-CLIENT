@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 
+import { MOCK_DATA } from '../../mocks/notice-list';
 import { CATEGORIES, type CategoryType, type Notice } from '../types';
 
 interface UseNoticeListReturn {
@@ -8,12 +9,14 @@ interface UseNoticeListReturn {
   noticeList: Notice[];
 }
 
-export const useNoticeList = (notices: Notice[]): UseNoticeListReturn => {
+export const useNoticeList = (): UseNoticeListReturn => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>(
     CATEGORIES[0],
   );
 
   // TODO: API 호출 로직으로 대체
+
+  const notices = MOCK_DATA;
 
   const handleChipClick = (category: CategoryType) => {
     setSelectedCategory(category);

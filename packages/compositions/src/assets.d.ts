@@ -19,11 +19,3 @@ declare module '*.jpeg' {
   const src: string;
   export default src;
 }
-<<<<<<< HEAD
-=======
-
-declare module '*.svg?url' {
-  const src: string;
-  export default src;
-}
->>>>>>> develop

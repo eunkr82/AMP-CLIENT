@@ -7,13 +7,6 @@ export const container = style({
   height: '100dvh',
 });
 
-<<<<<<< HEAD
-=======
-export const ResultViewContainer = style({
-  paddingTop: '8rem',
-});
-
->>>>>>> develop
 export const buttonContainer = style({
   padding: '2rem',
 });

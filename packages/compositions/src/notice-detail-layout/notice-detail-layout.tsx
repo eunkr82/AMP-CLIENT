@@ -1,25 +1,13 @@
 import { ReactNode } from 'react';
 
-<<<<<<< HEAD
-=======
-import { IMAGES } from '../assets/index';
->>>>>>> develop
 import ButtonGradientSection from '../button-gradient-section/button-gradient-section';
 
 import * as styles from './notice-detail-layout.css';
 
 interface NoticeData {
-<<<<<<< HEAD
   imageUrl: string;
   title: string;
   category: string;
-=======
-  imageUrl: string | null;
-  title: string;
-  category: {
-    categoryName: string;
-  };
->>>>>>> develop
   createdAt: string;
   content: string;
 }
@@ -41,23 +29,12 @@ const NoticeDetailLayoutRoot = ({ children }: NoticeDetailLayoutProps) => {
 };
 
 const Content = ({ data }: NoticeDetailContentProps) => {
-<<<<<<< HEAD
   return (
     <div className={styles.noticeDetail}>
       <img src={data.imageUrl} alt={data.title} className={styles.img} />
       <header className={styles.header}>
         <p className={styles.category}>
           주최 공지 {'>'} {data.category}
-=======
-  const imageSrc = data.imageUrl ?? IMAGES.EMPTY_NOTICE;
-
-  return (
-    <div className={styles.noticeDetail}>
-      <img src={imageSrc} alt={data.title} className={styles.img} />
-      <header className={styles.header}>
-        <p className={styles.category}>
-          주최 공지 {'>'} {data.category.categoryName}
->>>>>>> develop
         </p>
         <p className={styles.date}>{data.createdAt}</p>
       </header>
