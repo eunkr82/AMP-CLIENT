@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 
 import { CardFestival, Chip } from '@amp/ads-ui';
+import { IMAGES } from '@amp/compositions/assets';
 
 import type { FestivalBase, FestivalStatus } from '@shared/types/festival';
 
