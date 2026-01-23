@@ -1,7 +1,6 @@
 import type { ReactElement } from 'react';
 
 import { CardFestival, Chip } from '@amp/ads-ui';
-import { IMAGES } from '@amp/compositions/assets';
 
 import type { FestivalBase, FestivalStatus } from '@shared/types/festival';
 
@@ -34,19 +33,26 @@ interface FestivalListProps {
 const FestivalList = ({ festivals }: FestivalListProps) => {
   return (
     <>
-      {festivals.map((festival) => (
-        <CardFestival key={festival.festivalId}>
-          <CardFestival.Image
-            src={festival.imageUrl ?? IMAGES.EMPTY_NOTICE}
-            alt={festival.title}
-          />
-          <CardFestival.Body title={festival.title} date={festival.period}>
-            <CardFestival.Chip>
-              {getStatusChip(festival.status)}
-            </CardFestival.Chip>
-          </CardFestival.Body>
-        </CardFestival>
-      ))}
+      {festivals.map((festival, index) => {
+        const key = festival.festivalId
+          ? `festival-${festival.festivalId}`
+          : `festival-${festival.title}-${festival.period}-${index}`;
+        const imageSrc = festival.mainImageUrl ?? festival.imageUrl;
+
+        return (
+          <CardFestival key={key}>
+            {imageSrc && (
+              <CardFestival.Image src={imageSrc} alt={festival.title} />
+            )}
+
+            <CardFestival.Body title={festival.title} date={festival.period}>
+              <CardFestival.Chip>
+                {getStatusChip(festival.status)}
+              </CardFestival.Chip>
+            </CardFestival.Body>
+          </CardFestival>
+        );
+      })}
     </>
   );
 };
