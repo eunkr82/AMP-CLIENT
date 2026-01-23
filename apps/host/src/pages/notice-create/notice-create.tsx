@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 
@@ -9,8 +10,10 @@ import {
   Textfield,
 } from '@amp/ads-ui';
 import { PinIcon } from '@amp/ads-ui/icons';
+import { Loading } from '@amp/compositions';
 
 import { NOTICE_QUERY_OPTIONS } from '@features/notice/apis/query';
+import { NOTICES_QUERY_OPTIONS } from '@features/notice-list/apis/query';
 
 import { CATEGORIES } from '@shared/constants/category';
 import { useNoticeForm } from '@shared/hooks/use-notice-form';
@@ -24,15 +27,72 @@ const NoticeCreatePage = () => {
   const { eventId, noticeId } = useParams();
   const parsedFestivalId = eventId ? Number(eventId) : NaN;
   const festivalId = Number.isNaN(parsedFestivalId) ? null : parsedFestivalId;
+
   const parsedNoticeId = noticeId ? Number(noticeId) : NaN;
   const noticeIdValue = Number.isNaN(parsedNoticeId) ? null : parsedNoticeId;
-  const { data: noticeDetail } = useQuery({
+  const { data: noticeDetail, isPending } = useQuery({
     ...NOTICE_QUERY_OPTIONS.DETAIL(noticeIdValue ?? 0),
     enabled: noticeIdValue !== null,
   });
 
-  if (noticeIdValue !== null && !noticeDetail) {
-    return null;
+  const { data: noticeFestival } = useQuery({
+    ...NOTICES_QUERY_OPTIONS.BANNER(festivalId ?? 0),
+    enabled: festivalId !== null,
+  });
+
+  const { data: noticeListData, isPending: isNoticeListPending } = useQuery(
+    NOTICES_QUERY_OPTIONS.LIST(festivalId ?? Number.NaN, {
+      page: 0,
+      size: 100,
+    }),
+  );
+
+  const pinnedCount = useMemo(
+    () =>
+      noticeListData?.announcements.filter((notice) => notice.isPinned)
+        .length ?? 0,
+    [noticeListData],
+  );
+
+  const activeCategories = useMemo(() => {
+    const res = noticeFestival as
+      | {
+          data?: {
+            activeCategories?: Array<{
+              categoryId: number;
+              categoryName: string;
+            }>;
+          };
+        }
+      | {
+          activeCategories?: Array<{
+            categoryId: number;
+            categoryName: string;
+          }>;
+        }
+      | undefined;
+
+    if (!res) {
+      return [];
+    }
+
+    if ('data' in res) {
+      return res.data?.activeCategories ?? [];
+    }
+
+    if ('activeCategories' in res) {
+      return res.activeCategories ?? [];
+    }
+
+    return [];
+  }, [noticeFestival]);
+
+  if (noticeIdValue !== null && isPending) {
+    return <Loading />;
+  }
+
+  if (noticeIdValue !== null && isPending) {
+    return <Loading />;
   }
 
   const formKey = noticeDetail ? `edit-${noticeDetail.noticeId}` : 'create';
@@ -42,6 +102,9 @@ const NoticeCreatePage = () => {
       key={formKey}
       festivalId={festivalId}
       noticeDetail={noticeDetail}
+      activeCategories={activeCategories}
+      pinnedCount={pinnedCount}
+      pinnedCountReady={!isNoticeListPending}
     />
   );
 };
@@ -49,16 +112,35 @@ const NoticeCreatePage = () => {
 interface NoticeCreateFormProps {
   festivalId: number | null;
   noticeDetail?: NoticeDetail;
+  activeCategories: Array<{ categoryId: number; categoryName: string }>;
+  pinnedCount: number;
+  pinnedCountReady: boolean;
 }
 
 const NoticeCreateForm = ({
   festivalId,
   noticeDetail,
+  activeCategories,
+  pinnedCount,
+  pinnedCountReady,
 }: NoticeCreateFormProps) => {
   const { formState, handlers, isValid, isSubmitting } = useNoticeForm(
     festivalId,
     noticeDetail,
     noticeDetail?.noticeId ?? null,
+    pinnedCount,
+    pinnedCountReady,
+  );
+
+  const categories = useMemo(
+    () =>
+      activeCategories.length > 0
+        ? activeCategories.map((c) => ({
+            id: c.categoryId,
+            label: c.categoryName,
+          }))
+        : CATEGORIES,
+    [activeCategories],
   );
 
   const { isPinned, imageUrl, selectedCategoryId, title, content } = formState;
@@ -70,6 +152,7 @@ const NoticeCreateForm = ({
     handleContentChange,
     handleSubmit,
   } = handlers;
+
   return (
     <>
       <form className={styles.container} onSubmit={handleSubmit}>
@@ -79,6 +162,7 @@ const NoticeCreateForm = ({
             관객에게 전달할 공지 내용을 작성해주세요.
           </p>
         </div>
+
         <div className={styles.fixedBox}>
           <div className={styles.fixedText}>
             <PinIcon />
@@ -86,16 +170,19 @@ const NoticeCreateForm = ({
           </div>
           <CheckButton checked={isPinned} onChange={handlePinToggle} />
         </div>
+
         <InputLayout label='공지 이미지' isEssential={false}>
           <AddImageButton
             imageUrl={imageUrl}
             onFileChange={handleImageChange}
           />
         </InputLayout>
+
         <hr className={styles.divider} />
+
         <InputLayout label='카테고리' isEssential={true}>
           <div className={styles.chipContainer}>
-            {CATEGORIES.map((category) => (
+            {categories.map((category) => (
               <CategoryButton
                 key={category.id}
                 variant='neutral'
@@ -107,6 +194,7 @@ const NoticeCreateForm = ({
             ))}
           </div>
         </InputLayout>
+
         <InputLayout id='notice-title' label='제목' isEssential={true}>
           <Textfield
             variant='default'
@@ -116,6 +204,7 @@ const NoticeCreateForm = ({
             onChange={handleTitleChange}
           />
         </InputLayout>
+
         <InputLayout id='notice-description' label='내용' isEssential={true}>
           <Textarea
             id='notice-description'
@@ -124,6 +213,7 @@ const NoticeCreateForm = ({
             onChange={handleContentChange}
           />
         </InputLayout>
+
         <div className={styles.buttonContainer}>
           <CtaButton
             type='common'

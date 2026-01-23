@@ -127,6 +127,10 @@ const NoticeListPage = () => {
       toast.show('공연 정보를 불러오지 못했어요.');
       return;
     }
+
+    if (wishListMutation.isPending) {
+      return;
+    }
     const nextSelected = !isWatched;
     const prevSelected = isWatched;
 
@@ -276,7 +280,7 @@ const NoticeListPage = () => {
       <LiveStatusSheet
         open={isSheetOpen}
         onClose={closeStatusSheet}
-        isAvailableTime={isAvailableTime}
+        isAvailableTime={isAvailableTime ?? false}
         title={sheetTitle}
         selected={status}
         onConfirm={confirmStatus}
